@@ -12,6 +12,8 @@ class Controller {
 	public function invoke()  
 	{
 		$login = new Login;
+		if($_SESSION['logout'])$login->logOut();
+
         $allow = $login->checkToken();
         if($allow) include_once('phplib/app/views/navbar.php');
 
@@ -22,24 +24,23 @@ class Controller {
 		------ROUTER------
 */
 		
-		if (isset($_GET['page']) && $allow)
+		if ($allow)
 		{  
-			$page = $_GET['page'];
-
-			if($page == 'home') { 
-				include_once('phplib/app/views/home.php');
+			if(isset($_GET['page'])){
+				$page = $_GET['page'];
+			}else{
+				$page = "";
 			}
-
 			if($page == 'login') {
 				  include_once('phplib/app/views/login.php');
 			}
 
 			if($page == 'logout'){
-               	include_once('phplib/app/views/logout.php'); 
+               	$login->logOut();
 			}
             
 			if($page == 'settings'){
-				include_once('phplib/app/views/setting.php'); 
+				include_once('phplib/app/views/settings.php'); 
 			}
 
             if($page == 'profile'){
@@ -59,6 +60,9 @@ class Controller {
             if($page == 'error'){
 				include_once('phplib/app/views/error.php');
             }
+        	if($page =='home'){
+            	include_once('phplib/app/views/home.php');
+            }
 		}elseif(isset($_POST['register_button'])) { 
 			
 			$register = new Register;
@@ -69,12 +73,20 @@ class Controller {
 			}
 			
 		}elseif (isset($_POST['login_button'])) {
-			$login->logIn();
-			header("Refresh:0; url=index.php");      
+			if(!$login->logIn()){
+				unset($_POST['login_button']);
+				//header("Refresh:0; url=index.php");
+
+				}     
+
+		}elseif(isset($_SESSION['usertoken']) && !isset($_COOKIE['usertoken'])) {
+			$login->setCookies();
+			header("Refresh:0; url=index.php?page=home");      
 		}else{
 			include_once('phplib/app/views/register.php');
 
-		}  
+		}
+		
 /////////////////////////////////////////////////////////////////////////////
 
 		

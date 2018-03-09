@@ -1,24 +1,10 @@
 <?php
-
-ob_start(); //output buffering 
-  //setcookie("usertoken", $_SESSION['usertoken'], time()+3600, " ", '', false, false);  
-
-if(isset($_SESSION['usertoken']) && isset($_SESSION['sesstoken'])){
-
-  //setcookie("sesstoken", $_SESSION['sesstoken'], time()+3600, " ", '', false, false);  
-  setcookie("usertoken", $_SESSION['usertoken'], time()+3600, " ", '', false, false);  
-
-}else{
-  if(!isset($_SESSION)) {
-  session_start();
-  setcookie("usertoken", 'doodoo', time()+3600, " ", '', false, false);  
-
+ob_start(); 
+if(!isset($_SESSION)) {
+session_start();
 }
-  //echo  $_SESSION['sesstoken'];
-
-}
-
   ?>
+  
 <!doctype html>
 
 <html lang="en">
@@ -57,5 +43,5 @@ if(isset($_SESSION['usertoken']) && isset($_SESSION['sesstoken'])){
 </html>
 
 <?php 
-ob_end_flush();
+//ob_end_flush();
 ?>

@@ -41,7 +41,7 @@
 			<br>
 			<div id="first">
 
-				<form action="index.php?page=checklog" method="POST">
+				<form action="index.php" method="POST">
 					<input type="email" name="log_email" placeholder="Email Address" value="<?php 
 					if(isset($_SESSION['log_email'])) {
 						echo $_SESSION['log_email'];
@@ -50,7 +50,7 @@
 					<br>
 					<input type="password" name="log_password" placeholder="Password">
 					<br>
-					<?php if(in_array("Email or password was incorrect<br>", $_SESSION['error'])) echo  "Email or password was incorrect<br>"; ?>
+					<?php if(in_array("does not match", $_SESSION['error'])) echo  "Email or password was incorrect<br>"; ?>
 					<input type="submit" name="login_button" value="Login">
 					<br>
 					<a href="#" id="signup" class="signup">Need an account? Register here!</a>
@@ -70,9 +70,7 @@
 					<br>
 					<?php if(in_array("Your first name must be between 2 and 25 characters<br>", $_SESSION['error'])) echo "Your first name must be between 2 and 25 characters<br>"; ?>
 					
-					
-
-
+				
 					<input type="text" name="reg_lname" placeholder="Last Name" value="<?php 
 					if(isset($_SESSION['reg_lname'])) {
 						echo $_SESSION['reg_lname'];

@@ -26,22 +26,22 @@ class Register {
 
 		if(isset($_POST['register_button'])){
 
-			$fname = strip_tags($_POST['reg_fname']); //Remove html tags
-			$fname = str_replace(' ', '', $fname); //remove spaces
-			$fname = ucfirst(strtolower($fname)); //Uppercase first letter
+			$fname = strip_tags($_POST['reg_fname']); 
+			$fname = str_replace(' ', '', $fname); 
+			$fname = ucfirst(strtolower($fname)); 
 			$_SESSION['reg_fname'] = $fname;
-			$lname = strip_tags($_POST['reg_lname']); //Remove html tags
-			$lname = str_replace(' ', '', $lname); //remove spaces
-			$lname = ucfirst(strtolower($lname)); //Uppercase first letter
-			$_SESSION['reg_lname'] = $lname; //Stores last name into session variable
-			$email = strip_tags($_POST['reg_email']); //Remove html tags
-			$email = str_replace(' ', '', $email); //remove spaces
-			$_SESSION['reg_email'] = $email; //Stores email into session variable
-			$email2 = strip_tags($_POST['reg_email2']); //Remove html tags
-			$email2 = str_replace(' ', '', $email2); //remove spaces
-			$_SESSION['reg_email2'] = $email2; //Stores email2 into session variable
-			$password = strip_tags($_POST['reg_password']); //Remove html tags
-			$password2 = strip_tags($_POST['reg_password2']); //Remove html tags
+			$lname = strip_tags($_POST['reg_lname']); 
+			$lname = str_replace(' ', '', $lname); 
+			$lname = ucfirst(strtolower($lname));
+			$_SESSION['reg_lname'] = $lname; 
+			$email = strip_tags($_POST['reg_email']);
+			$email = str_replace(' ', '', $email); 
+			$_SESSION['reg_email'] = $email;
+			$email2 = strip_tags($_POST['reg_email2']); 
+			$email2 = str_replace(' ', '', $email2); 
+			$_SESSION['reg_email2'] = $email2; 
+			$password = $_POST['reg_password']; 
+			$password2 = $_POST['reg_password2']; 
 			$date = date("Y-m-d"); //Current date
 
 			if($email == $email2) {
@@ -85,11 +85,10 @@ class Register {
 
 
 			if(empty($_SESSION['error'])) {
-				$password = password_hash($password, PASSWORD_BCRYPT); //Encrypt password before sending to database
-
+				$passhash = password_hash($password, PASSWORD_BCRYPT); //Encrypt password before sending to database
 				//Generate username by concatenating first name and last name
 				$check_username_query = self::$db->select("SELECT username FROM users WHERE first_name='$fname' AND last_name = '$lname';");
-				$username = strtolower($fname . "_" . $lname);
+				$username = $fname . " " . $lname;
 				$num_u = count($check_username_query);
 				if($num_u>0){
 					$username .= $num_u;
@@ -101,20 +100,20 @@ class Register {
 				$query = self::$db->query("INSERT INTO users('first_name', 'last_name', 'username', 'email', 'password') VALUES ('$fname', '$lname', '$username', '$email', '$password')");
 				echo 'hi';
 				*/
-				echo $fname . $lname . $username . $email . $password;
+				//echo $fname . $lname . $username . $email . $password;
 				$fname = self::$db->escape($fname);
 				$lname = self::$db->escape($lname);
 				$username = self::$db->escape($username);
 				$email = self::$db->escape($email);
-				$password = self::$db->escape($password);
-				echo $fname . $lname . $username . $email . $password;
+				//$password = self::$db->escape($password);
+				//echo $fname . $lname . $username . $email . $password;
 
-				$s_q = "SELECT * FROM users";
-				$myquery = "INSERT INTO `users` VALUES ('',$fname, $lname, $username, $email, $password);";
+				//$s_q = "SELECT * FROM users;";
+				$myquery = "INSERT INTO `users` VALUES ('',$fname, $lname, $username, $email, '$passhash', '');";
 				self::$db->query($myquery);
-				print_r(self::$db->select($s_q));
+				//print_r(self::$db->select($s_q));
 				array_push($_SESSION['error'], "<span style='color: #14C800;'>You're all set! Go ahead and login!</span><br>");
-				echo 'sup';
+				
 				//Clear session variables 
 				$_SESSION['reg_fname'] = "";
 				$_SESSION['reg_lname'] = "";
