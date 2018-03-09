@@ -4,7 +4,7 @@ if(!isset($_SESSION)) {
 session_start();
 }
   ?>
-  
+
 <!doctype html>
 
 <html lang="en">
@@ -28,7 +28,7 @@ session_start();
   require_once("phplib/app/controllers/Controller.php");
   require_once("init.php");
   
-  $_SESSION['error']=array();
+  if(!$_SESSION['error'])$_SESSION['error']=array();
   //error_reporting(E_ALL); ini_set('display_errors', 1);
     if (isset($_GET['source'])) {
       highlight_file($_SERVER['SCRIPT_FILENAME']);
@@ -43,5 +43,6 @@ session_start();
 </html>
 
 <?php 
+//print_r($_SESSION['error']);
 //ob_end_flush();
 ?>

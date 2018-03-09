@@ -117,7 +117,7 @@
 		</div>
 
 	</div>
-
+<?php $_SESSION['error']=array();?>
 
 </body>
 </html>

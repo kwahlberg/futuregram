@@ -11,14 +11,11 @@ class Controller {
 	
 	public function invoke()  
 	{
-		$login = new Login;
+		if(!$login)$login = new Login;
 		if($_SESSION['logout'])$login->logOut();
 
         $allow = $login->checkToken();
         if($allow) include_once('phplib/app/views/navbar.php');
-
-        
-
 /*
 //////////////////////////////////////////////////////////////////////////////
 		------ROUTER------
@@ -75,13 +72,18 @@ class Controller {
 		}elseif (isset($_POST['login_button'])) {
 			if(!$login->logIn()){
 				unset($_POST['login_button']);
-				//header("Refresh:0; url=index.php");
+				array_push($_SESSION['error'], "does not match");
+				header("Refresh:0; url=index.php");
 
 				}     
 
 		}elseif(isset($_SESSION['usertoken']) && !isset($_COOKIE['usertoken'])) {
-			$login->setCookies();
-			header("Refresh:0; url=index.php?page=home");      
+			if($login->setCookies()){
+			header("Refresh:0; url=index.php?page=home");
+			}else{
+				include_once('phplib/app/views/register.php');
+			}
+
 		}else{
 			include_once('phplib/app/views/register.php');
 

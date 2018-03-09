@@ -48,15 +48,16 @@ class Login{
 		if($unlocked){
 			$this->setSessionVar($user[0]['id'],$hash);
 			//echo 'yeah finally';
+			$_SESSION['username'] = $user[0]['username'];
   			header( "refresh:0; url=index.php?page=home");
   		 			return true;
 		}
 		else{
 			array_push($_SESSION['error'] , 'does not match');
+
 			return false ;
 		}
-
-		$_SESSION['username'] = $user[0]['username'];
+		array_push($_SESSION['error'] , 'does not match');
 		return false;                                                                               
 	}
 
