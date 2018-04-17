@@ -27,8 +27,10 @@ session_start();
 		if($_SESSION['login'])$login->logIn();
                 if($_SESSION['logOut'])$login->logIn();
 }
-  ?>
+  
 
+
+?>
   <script src="js/scripts.js"></script>
 </body>
 </html>

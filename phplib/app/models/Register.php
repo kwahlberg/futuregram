@@ -21,7 +21,7 @@ class Register {
 		if (!self::$db) echo "<p>Cannot connect to database</p>";
 
     }
-
+    
 	public static function processForm(){
 
 		if(isset($_POST['register_button'])){
