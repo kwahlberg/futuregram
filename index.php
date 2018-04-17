@@ -7,21 +7,6 @@ session_start();
 
 <!doctype html>
 
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-
-  <title>FutureEyes</title>
-  <meta name="description" content="FuturEyes">
-  <meta name="author" content="By Kurt Wahlberg">
-
-
-  <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  <![endif]-->
-</head>
-
-<body>
 
   <?php
   
@@ -34,8 +19,14 @@ session_start();
       highlight_file($_SERVER['SCRIPT_FILENAME']);
       exit;
     }
+	if(!$_SESSION['login'] || !$_SESSION['logout']){
     $control = new Controller;
     $control->invoke();
+	}else{
+		$login = new Login;
+		if($_SESSION['login'])$login->logIn();
+                if($_SESSION['logOut'])$login->logIn();
+}
   ?>
 
   <script src="js/scripts.js"></script>

@@ -10,30 +10,33 @@ class Controller {
 	}
 	
 	public function invoke()  
-	{
+	{	
+		
 		if(!$login)$login = new Login;
 		if($_SESSION['logout'])$login->logOut();
-
-        $allow = $login->checkToken();
-        if($allow) include_once('phplib/app/views/navbar.php');
+		if($_SESSION['login'])$login->logIn();
+		if($_SESSION['allow'])$login->setCookies();
+       		if(!$_SESSION['allow']) $_SESSION['allow'] = $login->checkToken();
+		if(!$_SESSION['allow'])include_once('phplib/app/views/register.php');
+        	if($_SESSION['allow']) include_once('phplib/app/views/navbar.php');
 /*
 //////////////////////////////////////////////////////////////////////////////
 		------ROUTER------
 */
 		
-		if ($allow)
+		if ($_SESSION['allow'])
 		{  
 			if(isset($_GET['page'])){
 				$page = $_GET['page'];
 			}else{
-				$page = "";
+				$page = "home";
 			}
 			if($page == 'login') {
 				  include_once('phplib/app/views/login.php');
 			}
 
 			if($page == 'logout'){
-               	$login->logOut();
+               			$login->logOut();
 			}
             
 			if($page == 'settings'){

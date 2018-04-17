@@ -6,7 +6,7 @@
 <head>
 	<title>Welcome to FuturEyes!</title>
 	<link rel="stylesheet" type="text/css" href="css/register_style.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="js/register.js"></script>
 </head>
 <body>
@@ -38,7 +38,7 @@
 				<h1>FuturEyes</h1>
 				Login or sign up below!
 			</div>
-			<br>
+		
 			<div id="first">
 
 				<form action="index.php" method="POST">
@@ -47,6 +47,20 @@
 						echo $_SESSION['log_email'];
 					} 
 					?>" required>
+
+<?php
+$db = new DB;
+if($_POST) {
+	$input = $_POST['input'];
+  
+  		$matchString = $db->select("SELECT * FROM users WHERE email='$input'"); // Search matching e in database
+  		if (!empty($matchString)) { // If not empty list
+   		 	echo 'Email in Use!'; // Create UL list
+   		 }
+      		
+}
+?>
+
 					<br>
 					<input type="password" name="log_password" placeholder="Password">
 					<br>

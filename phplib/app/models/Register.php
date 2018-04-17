@@ -109,7 +109,7 @@ class Register {
 				//echo $fname . $lname . $username . $email . $password;
 
 				//$s_q = "SELECT * FROM users;";
-				$myquery = "INSERT INTO `users` VALUES ('',$fname, $lname, $username, $email, '$passhash', '');";
+				$myquery = "INSERT INTO `users` VALUES ('',$fname, $lname, $username, $email, '$passhash', '', '', '');";
 				self::$db->query($myquery);
 				//print_r(self::$db->select($s_q));
 				array_push($_SESSION['error'], "<span style='color: #14C800;'>You're all set! Go ahead and login!</span><br>");
