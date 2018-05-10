@@ -16,6 +16,7 @@ class Controller {
 		if($_SESSION['logout'])$login->logOut();
 		if($_SESSION['login'])$login->logIn();
 		if($_SESSION['allow'])$login->setCookies();
+			include_once 'phplib/app/views/header.html';
        		if(!$_SESSION['allow']) $_SESSION['allow'] = $login->checkToken();
 		if(!$_SESSION['allow'])include_once('phplib/app/views/register.php');
         	if($_SESSION['allow']) include_once('phplib/app/views/navbar.php');

@@ -8,6 +8,8 @@
 	<link rel="stylesheet" type="text/css" href="css/register_style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="js/register.js"></script>
+	<script src="js/keyUpSearch.js"></script>
+
 </head>
 <body>
 
@@ -46,20 +48,8 @@
 					if(isset($_SESSION['log_email'])) {
 						echo $_SESSION['log_email'];
 					} 
-					?>" required>
+					?>" required><span id="match"><img src="LoaderIcon.gif" id="loaderIcon" style="display:none" /></span>
 
-<?php
-$db = new DB;
-if($_POST) {
-	$input = $_POST['input'];
-  
-  		$matchString = $db->select("SELECT * FROM users WHERE email='$input'"); // Search matching e in database
-  		if (!empty($matchString)) { // If not empty list
-   		 	echo 'Email in Use!'; // Create UL list
-   		 }
-      		
-}
-?>
 
 					<br>
 					<input type="password" name="log_password" placeholder="Password">
@@ -93,11 +83,12 @@ if($_POST) {
 					<br>
 					<?php if(in_array("Your last name must be between 2 and 25 characters<br>", $_SESSION['error'])) echo "Your last name must be between 2 and 25 characters<br>"; ?>
 
-					<input type="email" name="reg_email" placeholder="Email" value="<?php 
+					<input type="email" id="reg_email" name="reg_email" placeholder="Email" value="<?php 
 					if(isset($_SESSION['reg_email'])) {
 						echo $_SESSION['reg_email'];
 					} 
 					?>" required>
+					<p><div id="match"></div><p>
 					<br>
 
 					<input type="email" name="reg_email2" placeholder="Confirm Email" value="<?php 

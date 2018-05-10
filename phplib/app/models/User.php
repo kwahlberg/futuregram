@@ -3,8 +3,8 @@ class User {
 	private $user;
 	private $db;
 
-	public function __construct($db, $user){
-		$this->db = $db;
+	public function __construct($user){
+		$this->db = new DB;
 		$user_details_query = "SELECT * FROM users WHERE id='$user'";
 		$this->user = $this->db->select($user_details_query)[0];
 	}
@@ -14,24 +14,22 @@ class User {
 	}
 
 	public function getFirstAndLastName() {
-		$username = $this->user['username'];
-		$query = "SELECT first_name, last_name FROM users WHERE username='$username'";
-		$row = $this->db->select($query)[0];
-		return $row['first_name'] . " " . $row['last_name'];
+		return $this->user['first_name'] . " " . $this->user['last_name'];
 	}
 
 	public function getProfilePic() {
-		$username = $this->user['username'];
-		$query = "SELECT profile_pic FROM users WHERE username='$username'";
-		$row = $this->db->select($query)[0];
-		return $row['profile_pic'];
+		return $this->user['image'];
 	}
 
-	public function getFriendArray() {
-		$username = $this->user['username'];
-		$query = "SELECT following FROM users WHERE username='$username'";
-		$row = $this->db->select($query)[0];
-		return $row['following'];
+	public function getFollowArray() {
+		$this->user['following'];
+	}
+
+	public function getPosts(){
+		$id = $this->user['id'];
+		$query = "SELECT * FROM posts WHERE u_id='$id'";
+		return $this->db->select($query);
+
 	}
 	
 
